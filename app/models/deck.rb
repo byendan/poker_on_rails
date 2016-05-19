@@ -43,8 +43,8 @@ class Deck < ActiveRecord::Base
 
   def order_swap(pre_deck)
     post_deck = []
+    rand_i = Random.new
     while pre_deck.length > 0
-      rand_i = Random.new
       index = rand_i.rand(pre_deck.length)
       post_deck << pre_deck[index]
       pre_deck.delete_at(index)
