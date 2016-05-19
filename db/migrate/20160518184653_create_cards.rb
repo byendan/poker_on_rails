@@ -4,6 +4,8 @@ class CreateCards < ActiveRecord::Migration
       t.string :value
       t.string :suit
 
+      t.references :deck, index: true, foreign_key: true
+
       t.timestamps null: false
     end
   end
