@@ -32,7 +32,6 @@ class Deck < ActiveRecord::Base
     pre_order_deck = pull_cards
     post_order_deck = order_swap(pre_order_deck)
     post_order_deck.each {|card| cards << card}
-
   end
 
   def pull_cards
