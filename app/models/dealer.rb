@@ -11,6 +11,7 @@ class Dealer < ActiveRecord::Base
       decks << deck
     end
     @master_deck = consolidate_decks
+    shuffle_decks
   end
 
   def draw_deck
@@ -46,5 +47,18 @@ class Dealer < ActiveRecord::Base
       @master_deck.delete_at(random_index)
     end
     @master_deck = post_master_deck
+  end
+
+  def pass_card
+    @master_deck.pop
+  end
+
+  def distribute(players)
+    hands = Hash.new
+    players.each {|player| hands[player] = Array.new}
+    2.times do
+      players.each {|player| hands[player] << pass_card}
+    end
+    return hands
   end
 end
