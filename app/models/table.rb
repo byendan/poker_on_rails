@@ -2,7 +2,7 @@ class Table < ActiveRecord::Base
   has_one :dealer
   has_many :players
 
-  attr_accessor :user, :ai_count, :players_ary
+  attr_accessor :user, :ai_count, :players_ary, :community_cards
 
   def initialize(options={})
     super
@@ -10,6 +10,8 @@ class Table < ActiveRecord::Base
     load_players(options[:user], ai_count)
     load_dealer
     deal_cards
+
+    self.community_cards = Array.new
   end
 
   def load_players(user, ai_count)
@@ -44,4 +46,31 @@ class Table < ActiveRecord::Base
       return player if name == player.name
     end
   end
+
+  def flop
+    3.times {flip}
+  end
+
+  def flip
+    self.community_cards << self.dealer.pass_card
+  end
+
+  def dealing_finished
+    return self.community_cards.length > 4
+  end
+
+  def clear_community_cards
+    self.dealer.take_cards(self.community_cards)
+    self.community_cards = Array.new
+  end
+
+  def clear_player_cards
+    self.players_ary.each {|player| self.dealer.take_cards(player.remove_cards)}
+  end
+
+  def clear_all_cards
+    clear_community_cards
+    clear_player_cards
+  end
+
 end

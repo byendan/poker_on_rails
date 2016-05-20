@@ -30,4 +30,13 @@ class Player < ActiveRecord::Base
     self.hand = hand
     hand.each {|card| self.cards << card }
   end
+
+  def remove_cards
+    give_back_cards = hand
+    hand = Array.new()
+    while self.cards.length > 0
+      self.cards.delete(self.cards.sort.first)
+    end
+    give_back_cards
+  end
 end

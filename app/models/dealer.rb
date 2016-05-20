@@ -53,6 +53,10 @@ class Dealer < ActiveRecord::Base
     @master_deck.pop
   end
 
+  def take_cards(card_ary)
+    card_ary.each {|card| @master_deck << card}
+  end
+
   def distribute(players)
     hands = Hash.new
     players.each {|player| hands[player] = Array.new}
@@ -61,4 +65,5 @@ class Dealer < ActiveRecord::Base
     end
     return hands
   end
+
 end
