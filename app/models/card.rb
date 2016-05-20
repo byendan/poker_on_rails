@@ -1,5 +1,6 @@
 class Card < ActiveRecord::Base
   belongs_to :deck
+  attr_accessor :fliped
 
   valid_suits = ["hearts", "diamonds", "spades", "clubs"]
 
@@ -11,6 +12,10 @@ class Card < ActiveRecord::Base
     }
   end
 
+  def initialize(options={})
+    super
+    fliped = false
+  end
 
   validates :value, presence: true, inclusion: {in: self.value_hash.keys.map(&:to_s)}
   validates :suit, presence: true, inclusion: { in: valid_suits }
@@ -20,6 +25,9 @@ class Card < ActiveRecord::Base
     return Card.value_hash[card_value]
   end
 
+  def flip
+    fliped = true
+  end
 
 
 end
