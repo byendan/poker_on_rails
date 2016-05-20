@@ -1,6 +1,6 @@
 class Player < ActiveRecord::Base
   has_many :cards
-  attr_accessor :money, :name
+  attr_accessor :money, :hand, :name
 
   def initialize(options={})
     super
@@ -24,5 +24,10 @@ class Player < ActiveRecord::Base
 
   def active?
     self.money > 0
+  end
+
+  def take_cards(hand)
+    self.hand = hand
+    hand.each {|card| self.cards << card }
   end
 end
