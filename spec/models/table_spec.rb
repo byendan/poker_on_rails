@@ -77,4 +77,5 @@ RSpec.describe Table, type: :model do
       expect(t.dealer.master_deck.length).to eq(52 * 6)
     end
   end
+
 end

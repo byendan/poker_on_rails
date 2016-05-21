@@ -2,6 +2,8 @@ class Table < ActiveRecord::Base
   has_one :dealer
   has_many :players
 
+  include PlayerCircle 
+
   attr_accessor :user, :ai_count, :players_ary, :community_cards
 
   def initialize(options={})
